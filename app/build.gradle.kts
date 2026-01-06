@@ -72,7 +72,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
-    implementation("net.zetetic:android-database-sqlcipher:4.6.1")
+    implementation ("net.zetetic:sqlcipher-android:4.6.1")
     implementation("androidx.sqlite:sqlite-ktx:2.4.0")
 
     // 8. Testing

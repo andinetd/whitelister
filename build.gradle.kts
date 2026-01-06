@@ -5,4 +5,11 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.ksp) apply false
+    kotlin("jvm")
+}
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+}
+kotlin {
+    jvmToolchain(8)
 }
