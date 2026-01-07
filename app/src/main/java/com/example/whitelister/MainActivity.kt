@@ -3,42 +3,38 @@ package com.example.whitelister
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.whitelister.ui.theme.WhitelisterTheme
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.app.ui.*
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Text("Hilt initialized")
+            val navController = rememberNavController()
+
+            NavHost(
+                navController = navController,
+                startDestination = Routes.INBOX
+            ) {
+                composable(Routes.INBOX) {
+                    InboxScreen(
+                        viewModel = hiltViewModel(),
+                        onNavigateToAllowedChats = { navController.navigate(Routes.ALLOWED_CHATS) },
+                        onNavigateToSettings = { navController.navigate(Routes.SETTINGS) }
+                    )
+                }
+                composable(Routes.ALLOWED_CHATS) {
+                    AllowedChatsScreen(hiltViewModel())
+                }
+                composable(Routes.SETTINGS) {
+                    SettingsScreen(hiltViewModel())
+                }
+            }
         }
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hell0 $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WhitelisterTheme {
-        Greeting("Androi")
     }
 }
